@@ -1,4 +1,4 @@
-ZSWI - Jak-TEAM
+ZSWI - Jak-Team
 ===============
 
 Projekt **12. Spojení BCIlab a Mindwave**
