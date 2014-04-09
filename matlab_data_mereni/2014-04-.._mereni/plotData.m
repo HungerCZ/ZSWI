@@ -10,8 +10,8 @@ loops = size(data,2);
 width = 512;
 
 %% zobrazi dcely graf najednou
-plotRAW(data, 0, width);
-return;
+%plotRAW(data, 0, width);
+%return;
 
 
 %%
