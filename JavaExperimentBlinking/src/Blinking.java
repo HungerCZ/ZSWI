@@ -6,8 +6,9 @@ public class Blinking {
 	
 
 	public static void main(String[] args) {
-		offlineReading(args[0]);
+		//offlineReading(args[0]);
 		
+		new RealtimeAnalyser(readInput(args[0]));
 	}
 	
 	/**Vola posloupnost metod pro rozbor a vizualizaci offline dat
