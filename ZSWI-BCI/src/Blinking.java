@@ -4,11 +4,18 @@ import java.util.Scanner;
 
 public class Blinking {
 	
-	
-	static int data [];
-	
+
 	public static void main(String[] args) {
-		readInput(args[0]);
+		offlineReading(args[0]);
+		
+	}
+	
+	/**Vola posloupnost metod pro rozbor a vizualizaci offline dat
+	 * 
+	 * @param inFile - název vstupního souboru
+	 */
+	public static void offlineReading(String inFile){
+		int [] data = readInput(inFile);
 		new Vizualizace(data);
 	}
 	
@@ -17,7 +24,7 @@ public class Blinking {
 	 * 
 	 * @param fileName - nazev vstupniuho souboru
 	 */
-	public static void readInput(String fileName){
+	public static int [] readInput(String fileName){
 		try {
 			File inFile = new File(fileName);
 			Scanner sc = new Scanner(inFile);
@@ -25,16 +32,19 @@ public class Blinking {
 			String [] dataString = sc.next().split(",");
 			sc.close();
 			
-			data = new int[dataString.length];
+			int [] data = new int[dataString.length];
 			
 			for(int i = 0; i < dataString.length; i++){
 				data[i] = Integer.parseInt(dataString[i]);
 			}
 			
+			return data;
+			
 		} catch (Exception e) {
 			System.out.println("Couldn't open or read the file.");
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 }
