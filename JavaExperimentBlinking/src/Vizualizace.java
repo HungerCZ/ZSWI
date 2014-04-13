@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+//import java.awt.RenderingHints;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 
 
 public class Vizualizace extends JFrame{
+
+	private static final long serialVersionUID = 1L;
 	
 	/** Rozmery JFramu */
 	int windowWidth = 1280;
