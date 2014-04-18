@@ -76,6 +76,12 @@ end
 fprintf( 'Connected.  Reading Packets...\n' );
 
 
+obj = onCleanup(@()disconnect(connectionId1));
+
+function disconnect(cnnid)
+    %% disconnect
+    calllib('Thinkgear', 'TG_FreeConnection', cnnid );
+end
 
 
 %%
@@ -115,9 +121,8 @@ assignin('base', 'data_end', datestr(now));
 
 
 
-%% disconnect
-calllib('Thinkgear', 'TG_FreeConnection', connectionId1 );
+%% need to test
+disconnect(connectionId1);
 
 
-
-
+end
