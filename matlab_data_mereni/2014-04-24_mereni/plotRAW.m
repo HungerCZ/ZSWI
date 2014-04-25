@@ -1,14 +1,13 @@
 function plotRAW(data, offset, width)
 
 useScrollgraph = false;
+height = 2000;
 
 %% graf s posuvnikem
 if(useScrollgraph)
 
-    height = 1200;
-
     if(size(data,1) == 1)
-        loops = size(data,2); % ?
+        loops = size(data,2);
     else
         loops = size(data,1);
     end
@@ -49,14 +48,17 @@ end;
 
 %% obycejny zpusob vykreslovani grafu
 
-height = 2000;
 
-if(size(data,1) == 1)
-    new = data(1:1,1+offset:width+offset);
-else
-    new = data(1+offset:width+offset,1:1);
-end
+% if(size(data,1) == 1)
+%     new = data(1:1,1+offset:width+offset);
+% else
+%     new = data(1+offset:width+offset,1:1);
+% end
 
-plot(new);
+plot(data(1+offset:width+offset,1:1), 'b');
+hold on
+plot(data(1+offset:width+offset,2:2), 'r');
+hold off
+
 axis([0 width -height height]);
 drawnow;

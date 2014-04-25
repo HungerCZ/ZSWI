@@ -5,7 +5,7 @@ function readRAW
 % vytvari promenne data ve vychozi workspace
 
 
-loops = 10240;
+loops = 1024;
 width = 512;
 data = zeros(loops,1);    %preallocate buffer
 
@@ -81,48 +81,46 @@ obj = onCleanup(@()disconnect(connectionId1));
 function disconnect(cnnid)
     %% disconnect
     calllib('Thinkgear', 'TG_FreeConnection', cnnid );
+    disp('Cleanup');
 end
 
 
 %%
 % record data
 
-i = 0;
-offset = 0;
-c_start = clock;
+i = 1;
+offset = 1;
+buffer = 64;
 
-while (i < loops)   %loop for 20 seconds
-    if (calllib('Thinkgear','TG_ReadPackets',connectionId1,1) == 1)   %if a packet was read...
-        
-        if (calllib('Thinkgear','TG_GetValueStatus',connectionId1,TG_DATA_RAW) ~= 0)   %if RAW has been updated
+while(true)
+    if (calllib('Thinkgear','TG_ReadPackets',connectionId1,1) == 1) % if a packet was read...
+
+        if (calllib('Thinkgear','TG_GetValueStatus',connectionId1,TG_DATA_RAW) ~= 0) % if RAW has been updated
             i = i + 1;
+            if(i >= loops) 
+               i = 1;
+               offset = 1;
+            end
             if(i > width)
                 offset = offset + 1;
             end
             data(i,1) = calllib('Thinkgear','TG_GetValue',connectionId1,TG_DATA_RAW);
-            
-            if(mod(i,24) == 0)
-                disp(i);
-                plotRAW(data, offset, width); % plot the data, update every .5 seconds (256 points)
+            data(i,2) = 0;
+
+            if(mod(i,buffer) == 0)
+                %disp(i);
+                mrknuto = analyse(data, i - buffer, buffer, 420);
+                if(mrknuto)
+                    data(i-buffer+1:i,2) = 1700;
+                end
+
+                %plotRAW(data, offset, width); % plot the data, update every .5 seconds (256 points)
             end
-            
+
         end
     end
 end
 
-
-%%
-% save data
-
-assignin('base', 'data', data);
-assignin('base', 'data_start', datestr(c_start));
-assignin('base', 'data_end', datestr(now));
-
-
-
-
-%% need to test
-disconnect(connectionId1);
 
 
 end
