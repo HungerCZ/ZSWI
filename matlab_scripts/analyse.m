@@ -1,4 +1,4 @@
-function mrknuto = analyse(data, offset, size, prahovaHodnotaMrkan, mouseClick)
+function mrknuto = analyse(data, offset, size, prahovaHodnotaMrkani, mouseClick)
 
     global predchozi;
 
