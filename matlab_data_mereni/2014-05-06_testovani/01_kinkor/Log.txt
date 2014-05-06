@@ -1,0 +1,61 @@
+Experiment I.
+=============
+
+Cílem experimentu je ovìøit základní funkènost - spuštìní, stabilita skriptu.
+1) Spuštìní MATLABu, pøipravení Mindwave Mobile.
+2) Otevøení sloky se skripty  matlab_scripts .
+3) Spuštìní skriptu  readRAW.m  - skript naète 61440 hodnot ze snímaèe - cca 2 minuty.
+4) Uivatel s nasazenım snímaèem ovìøí funkènost vyhodnocování mrknutí pomocí zobrazeného grafu (graf zobrazuje modøe køivku signálu a èervenì znázoròuje mrknutí).
+5) Skript  readRAW.m  té zapisuje namìøená data do vıstupních promìnnıch - ovìøit, pøípadnì upravit funkènost.
+
+
+Doba testování: 13:15 - 13:40
+Opakování: 3, data z posledního
+Hodnoty: 420 / 20%
+
+Prùbìh:
+ - problémy s propojením Mindwave mobile a PC pøes bluetooth - nezávislé na skriptech
+ - bìhem jednoho mìøení velké problémy s velmi rozkmitanou køivkou bez ohledu na nasazení - rušení?
+
+ - spuštìní skriptu bez problému
+ - vyhodnocení vykazuje vysokou míru správného vyhodnocení
+ - velmi slabá mrknutí a pomalé zavøení oèí je ignorováno
+ - zvednutí oboèí je zaznamenáno rozkmitem, vìtšinou té vyhodnoceno jako mrknutí
+ - problém s vyhodnocením velmi rychlého mrkání
+
+
+Experiment II.
+==============
+
+Cílem experimentu je hledání hranièních hodnot.
+1) Stejné jako kroky 1.-3. v prvním experimentu.
+2) Obsluha zkouší metodou pokus omyl (pøípadnì "pùlení intervalu") mìnit rùzné hranièní hodnoty uvnitø skriptu  analyse.m  - jako je prahová hodnota mrknutí nebo tolerance vyhodnocení.
+
+
+Doba testování: 13:42 - 13:55
+Lze znovu testovat na libovolnıch namìøenıch datech
+
+Vyzkoušené hodnoty:
+ 420/20/64 (vıchozí)
+ 350/20
+ 300/1
+ 300/99 - data 1
+ 500/50 - data 2
+ 420/20/32 - data 3
+ 420/20/48
+ 400/10/32 - vypadá nejlépe, závisí na nasazení
+Mìøeno po 20s.
+
+
+
+Experiment III.
+===============
+
+Cílem experimentu je zkoumání kvality signálu a vlivu na rozpornávání v závislosti na umístìní snímaèe. Závìrem mùe bıt zjištìní potøeby filtrování dat pøi špatném signálu, aby nedocházelo k falešnım vyhodnocením (napøíklad pøi nenasazení snímaèe).
+1) Stejné jako kroky 1.-4. v prvním experimentu.
+2) Bìhem pokusu uivatel zkouší mìnit umístìní snímaèe na frontálu hlavy.
+
+
+Doba testování: 13:55 - 14:05
+
+Poloha velmi ovlivòuje vısledky -> mìøení kvality signálu? - data 1

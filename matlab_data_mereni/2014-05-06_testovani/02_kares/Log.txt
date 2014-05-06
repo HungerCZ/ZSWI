@@ -1,0 +1,56 @@
+Experiment I.
+=============
+
+Cílem experimentu je ovìøit základní funkènost - spuštìní, stabilita skriptu.
+1) Spuštìní MATLABu, pøipravení Mindwave Mobile.
+2) Otevøení složky se skripty  matlab_scripts .
+3) Spuštìní skriptu  readRAW.m  - skript naète 61440 hodnot ze snímaèe - cca 2 minuty.
+4) Uživatel s nasazeným snímaèem ovìøí funkènost vyhodnocování mrknutí pomocí zobrazeného grafu (graf zobrazuje modøe køivku signálu a èervenì znázoròuje mrknutí).
+5) Skript  readRAW.m  též zapisuje namìøená data do výstupních promìnných - ovìøit, pøípadnì upravit funkènost.
+
+
+Doba testování: 14:35 - 43
+Opakování: 1
+Hodnoty: 420 / 20%
+
+Prùbìh:
+ - problémy s propojením Mindwave mobile a PC pøes bluetooth - nezávislé na skriptech
+ - bìhem jednoho mìøení velké problémy s velmi rozkmitanou køivkou bez ohledu na nasazení - rušení? - opìt!
+
+ - spuštìní skriptu bez problému
+ - vyhodnocení vykazuje vysokou míru správného vyhodnocení
+ - problém s vyhodnocením velmi rychlého mrkání
+
+
+Experiment II.
+==============
+
+Cílem experimentu je hledání hranièních hodnot.
+1) Stejné jako kroky 1.-3. v prvním experimentu.
+2) Obsluha zkouší metodou pokus omyl (pøípadnì "pùlení intervalu") mìnit rùzné hranièní hodnoty uvnitø skriptu  analyse.m  - jako je prahová hodnota mrknutí nebo tolerance vyhodnocení.
+
+
+Doba testování: 14.44 - 55
+Lze znovu testovat na libovolných namìøených datech
+
+Vyzkoušené hodnoty:
+ 420/20/64 (výchozí)
+ 300/1
+ 300/99
+ 200/1/32
+ 250/10/32
+Mìøeno po 20s.
+
+
+
+Experiment III.
+===============
+
+Cílem experimentu je zkoumání kvality signálu a vlivu na rozpornávání v závislosti na umístìní snímaèe. Závìrem mùže být zjištìní potøeby filtrování dat pøi špatném signálu, aby nedocházelo k falešným vyhodnocením (napøíklad pøi nenasazení snímaèe).
+1) Stejné jako kroky 1.-4. v prvním experimentu.
+2) Bìhem pokusu uživatel zkouší mìnit umístìní snímaèe na frontálu hlavy.
+
+
+Doba testování: 14:25-35
+
+Poloha mírnì ovlivòuje vyhodnocení - odfiltrovat pøi quality > 1
