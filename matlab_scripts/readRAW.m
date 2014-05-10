@@ -5,11 +5,15 @@ function readRAW
 % vytvari promenne data ve vychozi workspace
 
 
-loops = 61440; % 512 * 120
+loops = 61440;
 width = 512;
 data = zeros(loops,1);    %preallocate buffer
 
-portnum1 = 17;   %COM Port #
+treshold = 250;
+tolerance = 15;
+buffer = 64;
+
+portnum1 = 18;   %COM Port #
 comPortName1 = sprintf('\\\\.\\COM%d', portnum1);
 
 
@@ -55,19 +59,19 @@ if ( connectionId1 < 0 )
     error( 'ERROR: TG_GetNewConnectionId() returned %d.\n', connectionId1 );
 end;
 
-% Set/open stream (raw bytes) log file for connection
-errCode = calllib('Thinkgear', 'TG_SetStreamLog', connectionId1, 'streamLog.txt' );
-if( errCode < 0 )
-    error( 'ERROR: TG_SetStreamLog() returned %d.\n', errCode );
-end;
+%% Set/open stream (raw bytes) log file for connection
+%errCode = calllib('Thinkgear', 'TG_SetStreamLog', connectionId1, 'streamLog.txt' );
+%if( errCode < 0 )
+%    error( 'ERROR: TG_SetStreamLog() returned %d.\n', errCode );
+%end;
+%
+%% Set/open data (ThinkGear values) log file for connection
+%errCode = calllib('Thinkgear', 'TG_SetDataLog', connectionId1, 'dataLog.txt' );
+%if( errCode < 0 )
+%    error( 'ERROR: TG_SetDataLog() returned %d.\n', errCode );
+%end;
 
-% Set/open data (ThinkGear values) log file for connection
-errCode = calllib('Thinkgear', 'TG_SetDataLog', connectionId1, 'dataLog.txt' );
-if( errCode < 0 )
-    error( 'ERROR: TG_SetDataLog() returned %d.\n', errCode );
-end;
-
-% Attempt to connect the connection ID handle to serial port "COM3"
+% Attempt to connect the connection ID handle to serial port
 errCode = calllib('Thinkgear', 'TG_Connect',  connectionId1,comPortName1,TG_BAUD_57600,TG_STREAM_PACKETS );
 if ( errCode < 0 )
     error( 'ERROR: TG_Connect() returned %d.\n', errCode );
@@ -91,7 +95,6 @@ end
 i = 0;
 offset = 0;
 c_start = clock;
-buffer = 64;
 
 while (i < loops)   %loop for 20 seconds
     if (calllib('Thinkgear','TG_ReadPackets',connectionId1,1) == 1)   %if a packet was read...
@@ -101,17 +104,32 @@ while (i < loops)   %loop for 20 seconds
             if(i > width)
                 offset = offset + 1;
             end
+            
             data(i,1) = calllib('Thinkgear','TG_GetValue',connectionId1,TG_DATA_RAW);
             data(i,2) = 0;
+            data(i,3) = 0;
             
             if(mod(i,buffer) == 0)
                 %disp(i);
-                mrknuto = analyse(data, i - buffer, buffer, 420, false);
-                if(mrknuto)
-                    data(i-buffer:i,2) = 1700;
+                
+                % get quality
+                if (calllib('Thinkgear','TG_GetValueStatus',connectionId1,TG_DATA_POOR_SIGNAL) ~= 0)
+                    data(i,3) = calllib('Thinkgear','TG_GetValue',connectionId1,TG_DATA_POOR_SIGNAL);
+                end
+
+                % quality > 1
+                if(data(i,3) == 1)
+                
+                    % analyse blink
+                    blinked = analyse(data, i - buffer, buffer, treshold, tolerance, true);
+                    if(blinked)
+                        data(i-buffer:i,2) = 1700;
+                    end
+                else
+                    fprintf('Please check position - signal quality (desired 1): %d\n', data(i,3));
                 end
                 
-                plotRAW(data, offset, width); % plot the data, update every .5 seconds (256 points)
+                plotRAW(data, offset, width); % plot the data
             end
             
         end
@@ -125,6 +143,9 @@ end
 assignin('base', 'data', data);
 assignin('base', 'data_start', datestr(c_start));
 assignin('base', 'data_end', datestr(now));
+assignin('base', 'data_treshold', treshold);
+assignin('base', 'data_tolerance', tolerance);
+assignin('base', 'data_buffer', buffer);
 
 
 
