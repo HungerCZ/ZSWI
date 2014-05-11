@@ -1,19 +1,17 @@
 function readRAW
-% run this function to connect and plot raw EEG data
 % make sure to change portnum1 to the appropriate COM port
+% creates data output in default workspace
 
-% vytvari promenne data ve vychozi workspace
-
-
-loops = 61440;
+loops = 61440; % loops to be read
 width = 512;
-data = zeros(loops,3);    %preallocate buffer
+data = zeros(loops,1);
 
-treshold = 300;
-tolerance = 20;
-buffer = 42;
+treshold = 300;                 % detection treshold
+tolerance = 20;                 % tolerance in percentage
+buffer = 42;                    % buffer width
+triggerMouseClick = true;       % trigger left mouse button click
+portnum1 = 18;                  %COM Port #
 
-portnum1 = 18;   %COM Port #
 comPortName1 = sprintf('\\\\.\\COM%d', portnum1);
 
 
@@ -121,7 +119,7 @@ while (i < loops)   %loop for 20 seconds
                 if(data(i,3) == 1)
                 
                     % analyse blink
-                    blinked = analyse(data, i - buffer, buffer, treshold, tolerance, true);
+                    blinked = analyse(data, i - buffer, buffer, treshold, tolerance, triggerMouseClick);
                     if(blinked)
                         data(i-buffer:i,2) = 1700;
                     end
