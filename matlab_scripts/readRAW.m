@@ -4,7 +4,7 @@ function readRAW
 
 loops = 61440; % loops to be read
 width = 512;
-data = zeros(loops,1);
+data = zeros(loops,3);
 
 treshold = 300;                 % detection treshold
 tolerance = 20;                 % tolerance in percentage
