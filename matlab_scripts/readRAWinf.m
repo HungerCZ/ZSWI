@@ -9,9 +9,9 @@ loops = 1024;
 width = 512;
 data = zeros(loops,3);    %preallocate buffer
 
-treshold = 250;
-tolerance = 15;
-buffer = 64;
+treshold = 300;
+tolerance = 20;
+buffer = 42;
 
 portnum1 = 18;   %COM Port #
 comPortName1 = sprintf('\\\\.\\COM%d', portnum1);
