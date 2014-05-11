@@ -7,7 +7,7 @@ function readRAWinf
 
 loops = 1024;
 width = 512;
-data = zeros(loops,1);    %preallocate buffer
+data = zeros(loops,3);    %preallocate buffer
 
 treshold = 250;
 tolerance = 15;
@@ -91,6 +91,8 @@ end
 
 %%
 % record data
+
+% some parts are useless - copied from readRAW.m
 
 i = 1;
 offset = 1;

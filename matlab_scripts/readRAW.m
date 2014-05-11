@@ -7,7 +7,7 @@ function readRAW
 
 loops = 61440;
 width = 512;
-data = zeros(loops,1);    %preallocate buffer
+data = zeros(loops,3);    %preallocate buffer
 
 treshold = 250;
 tolerance = 15;
