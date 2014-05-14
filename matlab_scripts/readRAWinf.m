@@ -8,7 +8,7 @@ data = zeros(loops,3);
 
 treshold = 300;                 % detection treshold
 tolerance = 20;                 % tolerance in percentage
-buffer = 42;                    % buffer width
+buffer = 32;                    % buffer width
 triggerMouseClick = true;       % trigger left mouse button click
 portnum1 = 18;                  %COM Port #
 
