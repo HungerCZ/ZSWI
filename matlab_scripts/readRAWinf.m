@@ -108,14 +108,13 @@ while(true)
             
             data(i,1) = calllib('Thinkgear','TG_GetValue',connectionId1,TG_DATA_RAW);
             data(i,2) = 0;
-            data(i,3) = 0;
+            data(i,3) = -1;
 
             if(mod(i,buffer) == 0)
                 %disp(i);
                 % get quality
-                if (calllib('Thinkgear','TG_GetValueStatus',connectionId1,TG_DATA_POOR_SIGNAL) ~= 0)
-                    data(i,3) = calllib('Thinkgear','TG_GetValue',connectionId1,TG_DATA_POOR_SIGNAL);
-                end
+                data(i,3) = calllib('Thinkgear','TG_GetValue',connectionId1,TG_DATA_POOR_SIGNAL);
+
 
                 % quality > 1
                 if(data(i,3) == 1)
@@ -126,7 +125,7 @@ while(true)
                         data(i-buffer:i,2) = 1700;
                     end
                 else
-                    fprintf('Please check position - signal quality (desired 1): %d\n', data(i,3));
+                    fprintf('Please check position - signal quality (desired 0): %d\n', data(i,3));
                 end
 
                 %plotRAW(data, offset, width); % plot the data, update every .5 seconds (256 points)
